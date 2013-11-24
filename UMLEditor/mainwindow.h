@@ -5,6 +5,7 @@
 #include <qsignalmapper.h>
 #include <QGraphicsScene>
 #include <QGraphicsItem>
+#include <qinputdialog.h>
 #include <UMLScene.h>
 #include <iostream>
 #include <map>
@@ -31,6 +32,7 @@ public:
 	private slots:
 		//void _map();
 		void _actionTriggered( int );
+		void _actionSetItemName();
 private:
 
 	Ui::MainWindow *ui;

@@ -141,11 +141,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\libGraphicItems\Association.cpp" />
     <ClCompile Include="..\libGraphicItems\ClassItem.cpp" />
+    <ClCompile Include="..\libGraphicItems\Composition.cpp" />
+    <ClCompile Include="..\libGraphicItems\Generalization.cpp" />
     <ClCompile Include="..\libGraphicItems\UMLBase.cpp" />
     <ClCompile Include="..\libGraphicItems\UMLItem.cpp" />
+    <ClCompile Include="..\libGraphicItems\UMLLine.cpp" />
+    <ClCompile Include="..\libGraphicItems\UMLPort.cpp" />
     <ClCompile Include="..\libGraphicItems\UMLScene.cpp" />
     <ClCompile Include="..\libGraphicItems\UMLTextItem.cpp" />
+    <ClCompile Include="..\libGraphicItems\UseCaseItem.cpp" />
     <ClCompile Include="..\UMLEditor\main.cpp" />
     <ClCompile Include="..\UMLEditor\mainwindow.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_mainwindow.cpp">
@@ -158,11 +164,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\libGraphicItems\Association.h" />
     <ClInclude Include="..\libGraphicItems\ClassItem.h" />
+    <ClInclude Include="..\libGraphicItems\Composition.h" />
+    <ClInclude Include="..\libGraphicItems\Generalization.h" />
     <ClInclude Include="..\libGraphicItems\UMLBase.h" />
     <ClInclude Include="..\libGraphicItems\UMLItem.h" />
+    <ClInclude Include="..\libGraphicItems\UMLLine.h" />
+    <ClInclude Include="..\libGraphicItems\UMLPort.h" />
     <ClInclude Include="..\libGraphicItems\UMLScene.h" />
     <ClInclude Include="..\libGraphicItems\UMLTextItem.h" />
+    <ClInclude Include="..\libGraphicItems\UseCaseItem.h" />
     <ClInclude Include="..\UMLEditor\libcsystem.h" />
     <ClInclude Include="GeneratedFiles\ui_umlediter.h" />
     <CustomBuild Include="..\UMLEditor\mainwindow.h">

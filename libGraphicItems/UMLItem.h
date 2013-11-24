@@ -12,11 +12,12 @@
 #include <QStyleOptionGraphicsItem>
 #include <QStyle>
 #include <UMLBase.h>
+#include <UMLPort.h>
 enum ItemState{
 	Normal,Selected,Hover
 };
 class UMLItem :
-	public QGraphicsItem
+	public QGraphicsItem ,  public UMLPort 
 {
 	//Q_OBJECT
 public:
@@ -24,11 +25,11 @@ public:
 	UMLItem(qreal wid,qreal hgt);
 	QRectF boundingRect()const;   
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) = 0;   
-    virtual QPainterPath shape()const;  
+    virtual QPainterPath shape()const;
+	virtual void setName(QString ,int ) = 0;
 	void setParent(UMLBase * parent);
 	UMLBase * getParent();
 protected :
-
 	QRectF _rect()const;
 	
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);

@@ -1,17 +1,5 @@
-﻿已經開始建置於 2013/11/18 下午 09:03:26。
-     1>節點 2 (Build 目標) 上的專案 "D:\C\QT\Uml Editor\BruteForce\BruteForce.vcxproj"。
-     1>Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\C\QT\Uml Editor\x64\Debug\\UMLEditor.exe" /NOLOGO /LIBPATH:D:\devel\qt\5.0.1\msvc2012\lib qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Widgetsd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\C\QT\Uml Editor\x64\Debug\UMLEditor.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\C\QT\Uml Editor\x64\Debug\UMLEditor.lib" /MACHINE:X64 x64\Debug\ClassItem.obj
-         x64\Debug\UMLBase.obj
-         x64\Debug\UMLItem.obj
-         x64\Debug\UMLScene.obj
-         x64\Debug\UMLTextItem.obj
-         x64\Debug\main.obj
-         x64\Debug\mainwindow.obj
-         x64\Debug\moc_mainwindow.obj
-         BruteForce.vcxproj -> D:\C\QT\Uml Editor\x64\Debug\UMLEditor.exe
-     1>專案 "D:\C\QT\Uml Editor\BruteForce\BruteForce.vcxproj" (Build 目標) 建置完成。
+﻿已經開始建置於 2013/11/24 下午 11:50:27。
 
 建置成功。
 
-經過時間 00:00:00.86
+經過時間 00:00:00

@@ -36,21 +36,15 @@
     <Filter Include="UMLItems">
       <UniqueIdentifier>{1d0871fa-55c4-4ade-be40-2be813b44f2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UMLItems\base">
+      <UniqueIdentifier>{33e076da-3723-4eac-8fc8-f96ff2a1ed86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\base">
+      <UniqueIdentifier>{2433f901-e1d6-414e-b254-a23c6af38a12}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\libGraphicItems\UMLItem.cpp">
-      <Filter>UMLItems</Filter>
-    </ClCompile>
     <ClCompile Include="..\libGraphicItems\ClassItem.cpp">
-      <Filter>UMLItems</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libGraphicItems\UMLTextItem.cpp">
-      <Filter>UMLItems</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libGraphicItems\UMLScene.cpp">
-      <Filter>UMLItems</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libGraphicItems\UMLBase.cpp">
       <Filter>UMLItems</Filter>
     </ClCompile>
     <ClCompile Include="..\UMLEditor\main.cpp">
@@ -65,6 +59,36 @@
     <ClCompile Include="GeneratedFiles\Release\moc_mainwindow.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="..\libGraphicItems\UMLBase.cpp">
+      <Filter>UMLItems\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\UMLItem.cpp">
+      <Filter>UMLItems\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\UMLLine.cpp">
+      <Filter>UMLItems\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\UMLScene.cpp">
+      <Filter>UMLItems\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\UMLTextItem.cpp">
+      <Filter>UMLItems\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\Association.cpp">
+      <Filter>UMLItems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\UMLPort.cpp">
+      <Filter>UMLItems\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\Composition.cpp">
+      <Filter>UMLItems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\Generalization.cpp">
+      <Filter>UMLItems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\UseCaseItem.cpp">
+      <Filter>UMLItems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\UMLEditor\mainwindow.h">
@@ -78,23 +102,41 @@
     <ClInclude Include="..\libGraphicItems\ClassItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\libGraphicItems\UMLItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libGraphicItems\UMLTextItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libGraphicItems\UMLScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libGraphicItems\UMLBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\UMLEditor\libcsystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_umlediter.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\UMLBase.h">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\UMLItem.h">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\UMLLine.h">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\UMLScene.h">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\UMLTextItem.h">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\Association.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\UMLPort.h">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\Composition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\Generalization.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\UseCaseItem.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

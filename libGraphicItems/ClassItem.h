@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <list>
+
+#include "UMLPort.h"
 #include "umlitem.h"
 #include "UMLTextItem.h"
 class ClassItem :
@@ -13,7 +15,7 @@ public:
 	~ClassItem(void);
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	virtual QPainterPath shape()const;
-	void setClassName(QString text,int size);
+	void setName(QString text,int size);
 protected:
 
 	virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -24,7 +26,7 @@ protected:
     virtual void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 private:
-
+	void _addPorts(QPainterPath& path);
 	UMLTextItem * _name;
 	std::list<UMLTextItem *> _variable;
 	std::list<UMLTextItem *> _function;

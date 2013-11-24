@@ -3,7 +3,7 @@
 UMLItem::UMLItem(void) : _width() , _height() ,
 	_state(ItemState::Normal)
 {
-	setZValue(0);
+	setZValue(-1000);
 	setAcceptDrops(true);
 	setFlags(ItemIsSelectable);
 	setAcceptedMouseButtons(Qt::MouseButtons(Qt::MouseButton::LeftButton));
@@ -12,7 +12,7 @@ UMLItem::UMLItem(void) : _width() , _height() ,
 
 UMLItem::UMLItem(qreal wid,qreal hgt) : _state(ItemState::Normal) {   
 	_width=wid;_height=hgt;  
-	setZValue(0);
+	setZValue(-1000);
 	setAcceptDrops(true);
 	setFlags(ItemIsSelectable);
 	setAcceptedMouseButtons(Qt::MouseButtons(Qt::MouseButton::LeftButton));
@@ -54,6 +54,7 @@ void UMLItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
 	if(_parent != nullptr && _parent->getState() != UMLAddToScene::Select)return;
 	_state = ItemState::Selected;
+	//update_port();
 	update();
 }
 
@@ -61,6 +62,7 @@ void UMLItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
 	if(_parent != nullptr && _parent->getState() != UMLAddToScene::Select)return;
 	_state = ItemState::Normal;
+	_parent->setSelected((void*)this);
 	update();
 }
 

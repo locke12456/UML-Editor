@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/BruteForce">
+        <file>resouce/uml/uml-_0000_1.png</file>
+        <file>resouce/uml/uml-_0001_2.png</file>
+        <file>resouce/uml/uml-_0002_3.png</file>
+        <file>resouce/uml/uml-_0003_3.png</file>
+        <file>resouce/uml/uml-_0004_4.png</file>
+        <file>resouce/uml/uml-_0005_5.png</file>
+        <file>resouce/uml/uml-_0006_6.png</file>
+        <file>resouce/uml/uml-_0007_7.png</file>
+        <file>resouce/uml/uml-_0008_8.png</file>
+        <file>resouce/uml/uml-_0009_9.png</file>
+        <file>resouce/uml/uml-_0010_10.png</file>
+        <file>resouce/uml/uml-_0011_11.png</file>
+        <file>resouce/uml/uml-_0012_12.png</file>
+        <file>resouce/uml/uml-_0013_13.png</file>
+        <file>resouce/uml/uml-_0014_14.png</file>
+        <file>resouce/uml/uml-_0015_15.png</file>
+        <file>resouce/uml/uml-_0016_16.png</file>
+        <file>resouce/uml/uml-_0017_17.png</file>
+        <file>resouce/uml/uml-_0018_18.png</file>
+    </qresource>
+</RCC>
