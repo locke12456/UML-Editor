@@ -1,7 +1,7 @@
 ﻿#include "UMLItem.h"
 
-UMLItem::UMLItem(void) : _width() , _height() ,
-	_state(ItemState::Normal)
+UMLItem::UMLItem(void) : _size() ,
+	_state(ItemState::Normal) ,_in_group(false)
 {
 	setZValue(-1000);
 	setAcceptDrops(true);
@@ -10,8 +10,9 @@ UMLItem::UMLItem(void) : _width() , _height() ,
 	setAcceptHoverEvents(true);
 }
 
-UMLItem::UMLItem(qreal wid,qreal hgt) : _state(ItemState::Normal) {   
-	_width=wid;_height=hgt;  
+UMLItem::UMLItem(qreal wid,qreal hgt) : _state(ItemState::Normal)
+	,_in_group(false) , _size(wid,hgt)
+{    
 	setZValue(-1000);
 	setAcceptDrops(true);
 	setFlags(ItemIsSelectable);
@@ -20,11 +21,19 @@ UMLItem::UMLItem(qreal wid,qreal hgt) : _state(ItemState::Normal) {
 }  
 
 QRectF UMLItem::boundingRect()const{   
-	return QRectF( -_width/2-1 , -_height/2-1 , _width+2 , _height+2 );
+	return QRectF( -_size.width()/2-1 , -_size.height()/2-1 , _size.width()+2 , _size.height()+2 );
 }  
 
-QPainterPath UMLItem::shape()const{   
-	QPainterPath path;   
+void UMLItem::setSize(QSizeF size)
+{
+	_size = size;
+}
+
+QPainterPath UMLItem::shape(){   
+	QPainterPath path;
+
+	if(IsInGroup())_center = pos();
+	else _center = QPointF(0,0);
 	path.addRect(_rect());     
 	return path;  
 } 
@@ -39,13 +48,37 @@ UMLBase * UMLItem::getParent()
 	return _parent;
 }
 
+void UMLItem::setState(ItemState state)
+{
+	_state = state;
+	update();
+}
+ItemState UMLItem::getState()
+{
+	return _state;
+}
+bool UMLItem::IsInGroup()
+{
+	return _in_group;
+}
+void UMLItem::JoinToGroup()
+{
+	_in_group =true;
+}
+
+void UMLItem::LeaveGroup()
+{
+	_in_group =false;
+}
+
 QRectF UMLItem::_rect()const{
-	return QRectF(-_width/2,-_height/2,_width,_height);
+	return QRectF(_center.x()+(-_size.width()/2),_center.y()+(-_size.height()/2),_size.width(),_size.height());
 }
 
 void UMLItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 	if(_parent != nullptr && _parent->getState() != UMLAddToScene::Select)return;
+	//if(_parent->IsItemSelect())return;
 	_state = ItemState::Selected;
 	update();
 }
@@ -54,7 +87,6 @@ void UMLItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
 	if(_parent != nullptr && _parent->getState() != UMLAddToScene::Select)return;
 	_state = ItemState::Selected;
-	//update_port();
 	update();
 }
 

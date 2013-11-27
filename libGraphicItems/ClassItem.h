@@ -14,7 +14,8 @@ public:
 	ClassItem(qreal wid,qreal hgt);
 	~ClassItem(void);
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-	virtual QPainterPath shape()const;
+	virtual QPainterPath shape();
+	virtual void setPos(QPointF);
 	void setName(QString text,int size);
 protected:
 

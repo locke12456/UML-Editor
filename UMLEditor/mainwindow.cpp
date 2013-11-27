@@ -10,10 +10,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-
 	_initEvents();
 	_mapAction();
 	connect(	ui->actionRename	,SIGNAL(triggered()),SLOT(_actionSetItemName()));
+	connect(	ui->actionGroup		,SIGNAL(triggered()),SLOT(_actionSetGroup()));
+	connect(	ui->actionUngroup	,SIGNAL(triggered()),SLOT(_actionSetUnGroup()));
+
 	_scene->setSceneRect(0,0,781,511);
 	ui->painter->setScene(_scene);
 
@@ -67,6 +69,7 @@ void MainWindow::_mapAction()
 void MainWindow::_actionTriggered( int state ){
 	_setState(UMLAddToScene(state));
 }
+
 void MainWindow::_actionSetItemName()
 {
 	bool ok;
@@ -76,6 +79,17 @@ void MainWindow::_actionSetItemName()
 	if (ok && !text.isEmpty())
 		_scene->setItemName(text);
 }
+
+void MainWindow::_actionSetGroup()
+{
+	_scene->setGroup();
+}
+
+void MainWindow::_actionSetUnGroup()
+{
+	_scene->setUnGroup();
+}
+
 void MainWindow::_setState(UMLAddToScene state){
 	Actions::const_iterator action = _actions->find(state);
 	if(action ==_actions->end())return;

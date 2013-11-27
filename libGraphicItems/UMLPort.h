@@ -9,7 +9,7 @@
 #define max(a,b)    (((a) > (b)) ? (a) : (b))
 #define min(a,b)    (((a) < (b)) ? (a) : (b))
 #endif
-#define MATCHING_LENGTH 32
+#define MATCHING_LENGTH 64
 
 class UsedPort{
 public:
@@ -28,7 +28,10 @@ public:
 	void setCalc(QGraphicsItem *);
 	QPoint FindPonit(QPoint ); 
 	QPoint getPotByIndex(int);
+	int getIndexByPort(QPoint);
 	void setPotByIndex(QPoint,int);
+	bool IsPortOpen();
+	void setPortOpen(bool);
 	int length();
 protected:
 	QRectF _getPort(QPoint);
@@ -38,6 +41,7 @@ protected:
 private:
 	static double _distence(QPoint,QPoint);
 	QPoint _matching(QPoint );
+	bool _open;
 	std::vector<QPoint> _pots;
 	QPoint* _now;
 	QGraphicsItem * _calc;

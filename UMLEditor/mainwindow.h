@@ -10,12 +10,6 @@
 #include <iostream>
 #include <map>
 #include <functional>
-//enum UI_QAction_State{
-//	Select,	Broom,	
-//	Add_package,	Add_class,	Add_association,	Add_aggregation,	Add_composition,
-//	Add_association_end,	Add_generalization,	Add_interface,	Add_Realization,
-//	Add_dependency,	Add_attribute,	Add_operation,	Add_data_type,
-//};
 
 namespace Ui {
 	class MainWindow;
@@ -33,6 +27,9 @@ public:
 		//void _map();
 		void _actionTriggered( int );
 		void _actionSetItemName();
+		
+		void _actionSetGroup();
+		void _actionSetUnGroup();
 private:
 
 	Ui::MainWindow *ui;

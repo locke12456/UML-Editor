@@ -14,7 +14,7 @@ public:
 	UseCaseItem(qreal wid,qreal hgt);
 	~UseCaseItem(void);
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-	virtual QPainterPath shape()const;
+	virtual QPainterPath shape();
 	void setName(QString text,int size);
 protected:
 	virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);

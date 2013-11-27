@@ -9,7 +9,7 @@ UMLTextItem::UMLTextItem(void) :
 }
 void UMLTextItem::setPosition(int x,int y){
 	_clear();
-	_point = QPoint(x,y);
+	_point = QPoint(-( (_text.size()-1)/2 * _font_size )+x,y);
 	_path.addText(_point,QFont(_font,_font_size),QString(_text.c_str()));
 }
 QRectF UMLTextItem::getRect(){

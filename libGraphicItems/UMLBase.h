@@ -1,4 +1,5 @@
 #pragma once
+#include <qpoint.h>
 enum UMLAddToScene{
 	None
 	,Select			
@@ -33,12 +34,14 @@ public:
 	void setSelected(void* selected);
 	UMLDrawToScene getDrawState();
 	void setDrawState(UMLDrawToScene state);
+	bool IsItemSelect();
 	bool IsAddLineItem();
 	bool IsAddObjectItem();
 	bool IsChangeItemInfo();
 	bool IsDrawPress();
 	bool IsDrawMove();
 	bool IsDrawFinish();
+	virtual void moveTo(QPointF) = 0;
 	virtual void update_lines() = 0; 
 protected:
 	

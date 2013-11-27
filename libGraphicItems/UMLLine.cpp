@@ -22,17 +22,20 @@ UMLLine::UMLLine(QPoint p1,QPoint p2) :  _point1(p1) , _point2(p2) ,
 	setAcceptHoverEvents(true);
 }  
 
-QRectF UMLLine::boundingRect()const{   
-	return QRectF( _point1.x() , _point1.y() ,_point2.y() , _point2.y() );
+QRectF UMLLine::boundingRect()const{  
+	
+	QPoint point =	_point1.x()>_point2.x() && _point1.y()<_point2.y() ? QPoint(_point2.x() , _point1.y()) :
+					_point1.x()<_point2.x() && _point1.y()>_point2.y() ? QPoint(_point1.x() , _point2.y()) : QPointMin(_point1,_point2);
+	return QRectF( point.x() , point.y() ,abs((_point1-_point2).x()) , abs((_point1-_point2).y()) );
 }  
 
 QPainterPath UMLLine::shape()const{   
-	QPainterPath path;   
-	//path.moveTo(_point1.x(),_point1.y());     
-	//path.lineTo(_point2.x(),_point2.y());     
+	QPainterPath path;    
 	return path;  
 } 
+void UMLLine::findInRange(std::list<UMLItem*> ){
 
+}
 QLineF UMLLine::getLine()
 {
 	if(_parent_item!=nullptr)_point1 = _parent_item->FindPonit(_point1);
@@ -67,7 +70,6 @@ TargetPosition UMLLine::getTargetPosition()
 	if( angle >= 135 && angle < 225 ) 
 		return TargetPosition::Up;
 	return TargetPosition::Left;
-
 }
 
 void UMLLine::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){   
@@ -98,14 +100,16 @@ void UMLLine::setParent(UMLBase * parent)
 	_parent = parent;
 }
 
-void UMLLine::setTargetItem(UMLItem* item)
+void UMLLine::setTargetItem(UMLItem* item,int index)
 {
 	_target_item = item;
+	_target_index = index;
 }
 
-void UMLLine::setParentItem(UMLItem* item)
+void UMLLine::setParentItem(UMLItem* item , int index)
 {
 	_parent_item = item;
+	_parent_index = index;
 }
 
 UMLBase * UMLLine::getParent()

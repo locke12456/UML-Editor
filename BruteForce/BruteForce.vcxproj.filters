@@ -89,6 +89,12 @@
     <ClCompile Include="..\libGraphicItems\UseCaseItem.cpp">
       <Filter>UMLItems</Filter>
     </ClCompile>
+    <ClCompile Include="..\libGraphicItems\ItemSelect.cpp">
+      <Filter>UMLItems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\Group.cpp">
+      <Filter>UMLItems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\UMLEditor\mainwindow.h">
@@ -136,6 +142,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\libGraphicItems\UseCaseItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\ItemSelect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\Group.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

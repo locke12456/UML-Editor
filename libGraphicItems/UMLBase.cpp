@@ -38,6 +38,12 @@ UMLDrawToScene UMLBase::getDrawState()
 	return _draw;
 }
 
+
+bool UMLBase::IsItemSelect()
+{
+	return _state >= Select && _state <= Broom;
+}
+
 bool UMLBase::IsAddLineItem()
 {
 	return _state >= Add_association && _state <= Add_dependency;

@@ -145,6 +145,8 @@
     <ClCompile Include="..\libGraphicItems\ClassItem.cpp" />
     <ClCompile Include="..\libGraphicItems\Composition.cpp" />
     <ClCompile Include="..\libGraphicItems\Generalization.cpp" />
+    <ClCompile Include="..\libGraphicItems\Group.cpp" />
+    <ClCompile Include="..\libGraphicItems\ItemSelect.cpp" />
     <ClCompile Include="..\libGraphicItems\UMLBase.cpp" />
     <ClCompile Include="..\libGraphicItems\UMLItem.cpp" />
     <ClCompile Include="..\libGraphicItems\UMLLine.cpp" />
@@ -168,6 +170,8 @@
     <ClInclude Include="..\libGraphicItems\ClassItem.h" />
     <ClInclude Include="..\libGraphicItems\Composition.h" />
     <ClInclude Include="..\libGraphicItems\Generalization.h" />
+    <ClInclude Include="..\libGraphicItems\Group.h" />
+    <ClInclude Include="..\libGraphicItems\ItemSelect.h" />
     <ClInclude Include="..\libGraphicItems\UMLBase.h" />
     <ClInclude Include="..\libGraphicItems\UMLItem.h" />
     <ClInclude Include="..\libGraphicItems\UMLLine.h" />

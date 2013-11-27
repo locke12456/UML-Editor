@@ -1,6 +1,7 @@
 #pragma once
 #include <QDebug>
 #include <UMLItem.h>
+#define QPointMin(a,b) ((a.x()<b.x()||a.y()<b.y())?a:b) 
 enum TargetPosition
 {
 	Center,Up,Down,Left,Right
@@ -18,11 +19,12 @@ public:
 	void setParent(UMLBase * parent);
 	void setCurrentPoint(QPoint);
 	void setTargetPoint(QPoint);
-	void setTargetItem(UMLItem *);
-	void setParentItem(UMLItem *);
+	void setTargetItem(UMLItem *,int);
+	void setParentItem(UMLItem *,int);
 	TargetPosition getTargetPosition();
 	UMLBase * getParent();
 	QLineF getLine();
+	virtual void findInRange(std::list<UMLItem*>);
 protected :
 	QRectF _addPot(QPoint);
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -38,6 +40,7 @@ private:
     QPoint _point2; 
 	UMLItem * _parent_item;
 	UMLItem * _target_item;
-
+	int _parent_index;
+	int _target_index;
 };
 

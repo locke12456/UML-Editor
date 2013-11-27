@@ -25,19 +25,23 @@ void UseCaseItem::setName(QString text,int size){
 	_name->setText(text.toStdString());
 	_name->setFont(DEFAULT_FONT,size);
 }
-QPainterPath UseCaseItem::shape()const{   
+QPainterPath UseCaseItem::shape(){   
 	QPainterPath path;
+	_center = QPoint(0,0);
+	if(IsInGroup())_center = pos();
 	path.addEllipse(_rect());    
-	_name->setPosition(-_rect().width()/2+4,8);
+	_name->setPosition(_center.x(),_center.y()+8);
 	path.addPath(_name->getPath());
+	if(IsPortOpen())
+		_addPorts(path);
 	return path;  
 } 
 void UseCaseItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){   
 	Q_UNUSED(widget);   
+	if(IsInGroup())return;
 	QPainterPath temp;
-	if(getParent()->IsAddLineItem())
-		_addPorts(temp);
-	if(_state & ItemState::Selected){    
+
+	if(_state & ItemState::Selected || getParent()->getSelected() == this){    
 		painter->setPen(QPen(Qt::red,2,Qt::SolidLine));  
 	}
 	if(_state & ItemState::Hover){    
@@ -55,9 +59,11 @@ void UseCaseItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void UseCaseItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
 	UMLItem::mouseMoveEvent(event);
-	if(_state != ItemState::Selected) return;
-	setPos(event->scenePos().x(),event->scenePos().y());
-	getParent()->update_lines();
+	if(_state != ItemState::Selected)return;
+	if(IsInGroup()){
+		getParent()->moveTo(event->scenePos()-pos());
+	}else
+		setPos(event->scenePos());
 }
 void UseCaseItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
@@ -79,6 +85,8 @@ void UseCaseItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 	UMLItem::hoverLeaveEvent(event);
 }
 void UseCaseItem::_addPorts(QPainterPath& path){
-	for(int i = 0;i < length();i++)
-		path.addRect(_getPort(getPotByIndex(i)));
+	for(int i = 0;i < length();i++){
+		QRectF rect = _getPort(getPotByIndex(i));
+		path.addRect(QRectF(_center.x()+rect.x(),_center.y()+rect.y(),rect.width(),rect.height()));
+	}
 }
