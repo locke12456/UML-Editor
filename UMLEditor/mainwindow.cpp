@@ -5,7 +5,7 @@
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::MainWindow),
-	_scene(new UMLScene) , _mapper(new QSignalMapper(this)) , _actions(new Actions) , _pre_action(nullptr)
+	_scene(UMLScene::GetScene()) , _mapper(new QSignalMapper(this)) , _actions(new Actions) , _pre_action(nullptr)
 
 {
 	ui->setupUi(this);
@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-	delete _scene;
+	UMLScene::Destory();
 	delete _mapper;
 	delete _actions;
 	delete ui;
@@ -39,7 +39,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::_initEvents()
 {
-	_actions->insert(	std::make_pair(Select				,ui->actionSelect				)  );
+	_actions->insert(	std::make_pair(SelectItemMode		,ui->actionSelect				)  );
 	_actions->insert(	std::make_pair(Broom				,ui->actionBroom				)  );
 	_actions->insert(	std::make_pair(Add_package			,ui->actionAdd_package			)  );
 	_actions->insert(	std::make_pair(Add_class			,ui->actionAdd_class			)  );
@@ -82,12 +82,12 @@ void MainWindow::_actionSetItemName()
 
 void MainWindow::_actionSetGroup()
 {
-	_scene->setGroup();
+	//_scene->setGroup();
 }
 
 void MainWindow::_actionSetUnGroup()
 {
-	_scene->setUnGroup();
+	//_scene->setUnGroup();
 }
 
 void MainWindow::_setState(UMLAddToScene state){
@@ -98,5 +98,5 @@ void MainWindow::_setState(UMLAddToScene state){
 	if(_pre_action!= nullptr && _pre_action != qaction)
 		_pre_action->setChecked(false);
 	_pre_action = qaction;
-	_scene->setState(!qaction->isChecked()?UMLAddToScene::None:state);
+	_scene->ChangeCurrentMode(!qaction->isChecked()?UMLAddToScene::None:state);
 }

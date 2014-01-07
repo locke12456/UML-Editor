@@ -5,13 +5,13 @@
 #include <QDebug>
 #include <umlline.h>
 #include <UMLItem.h>
-#include <UMLPort.h>
+#include <PortFactory.h>
 class ItemSelect :
 	public UMLLine
 {
 public:
 	ItemSelect(void);
-	ItemSelect(QPoint p1,QPoint p2);
+	ItemSelect(Port* p1,Port* p2);
 	~ItemSelect(void);
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	QPainterPath shape();

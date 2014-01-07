@@ -2,13 +2,12 @@
 #include <iostream>
 #include <list>
 #include <umlline.h>
-#include <UMLPort.h>
 class Association :
-	public UMLLine ,  public UMLPort
+	public UMLLine
 {
 public:
 	Association(void);
-	Association(QPoint p1,QPoint p2);
+	Association(Port* p1,Port* p2);
 	~Association(void);
 protected:
 	virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -19,5 +18,4 @@ protected:
     virtual void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 private:
-	void _addPots(QPainterPath& path);
 };

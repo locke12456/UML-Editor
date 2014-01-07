@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <QTimer>
 #include <QPainter>
 #include <QRectF>
@@ -12,7 +13,7 @@
 #include <QStyle>
 #include <QGraphicsScene>
 #include <QDebug>
-#include <UMLBase.h>
+#include <UMLState.h>
 #include <ItemSelect.h>
 #include <Group.h>
 #include <ClassItem.h>
@@ -20,39 +21,54 @@
 #include <Association.h>
 #include <Generalization.h>
 #include <Composition.h>
-
+#include <CreateItemMode.h>
+#include <CreateLineMode.h>
+#include <GroupMode.h>
+#include <SelectMode.h>
 class UMLScene :
-	public QGraphicsScene , public UMLBase
+	public QGraphicsScene
 {
 public:
-	UMLScene(void);
-	~UMLScene(void);
+	static UMLScene * GetScene();
+	static void Destory();
 	void setItemName();
 	void setItemName(QString);
-	void setGroup();
-	void setUnGroup();
+	UMLGroup * getGroup();
+	std::list<UMLItem*> * getSelected();
+	std::list<UMLItem*> * getItemList();
+	std::list<UMLLine*> * getLineList();
+	QPointF MousePosition();
+	void ChangeCurrentMode(UMLAddToScene );
+	UMLState* getState();
 	void addClass();
 	void addAssociation();
-	virtual void moveTo(QPointF);
-	void update_lines();
 protected:
 	virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 private:
-	typedef void (UMLLine::*_setter)(UMLItem*,int);
+	typedef std::map<UMLAddToScene , Mode*> Actions;
+	typedef void (UMLLine::*_setter)(Port*);
 
-	QPoint _moveTo;
-	QPoint _lineTo;
-	Group * _group;
+	static UMLScene * _singleton;
+	UMLScene(void);
+	~UMLScene(void);
+	void _init();
+	void _changeCurrentMode(UMLAddToScene );
+	Actions _modes;
+	Mode * _currentMode;
+	UMLState _state;
+	QPointF _pos;
+
+	Port * _moveTo;
+	Port * _lineTo;
+	UMLGroup * _group;
 	UMLLine * _line;
 	UMLItem * _item;
 
 	std::list<UMLItem*> _items;
 	std::list<UMLLine*> _lines;
 	std::list<UMLItem*> _selected;
-	UMLLine * _searchCanMatch(UMLLine *);
-	UMLItem * _searchCanMatchItem(UMLLine *,QPoint ,_setter);
 
 	void _addToGroup();
 	void _addToScene(QPointF);

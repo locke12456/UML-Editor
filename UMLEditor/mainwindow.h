@@ -1,15 +1,15 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include <iostream>
+#include <map>
+#include <functional>
 #include <QMainWindow>
 #include <qsignalmapper.h>
 #include <QGraphicsScene>
 #include <QGraphicsItem>
 #include <qinputdialog.h>
 #include <UMLScene.h>
-#include <iostream>
-#include <map>
-#include <functional>
+
 
 namespace Ui {
 	class MainWindow;

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <list>
 
-#include "UMLPort.h"
+#include "PortFactory.h"
 #include "umlitem.h"
 #include "UMLTextItem.h"
 class UseCaseItem :
@@ -24,7 +24,6 @@ protected:
     virtual void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 private:
-	void _addPorts(QPainterPath& path);
 	UMLTextItem * _name;
 };
 

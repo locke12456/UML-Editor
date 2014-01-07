@@ -6,7 +6,7 @@ class Generalization : public UMLLine
 {
 public:
 	Generalization(void);
-	Generalization(QPoint p1,QPoint p2);
+	Generalization(Port* p1,Port* p2);
 	~Generalization(void);
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	QPainterPath shape();

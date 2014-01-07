@@ -4,7 +4,7 @@ Association::Association(void) : UMLLine()
 {
 }
 
-Association::Association(QPoint p1,QPoint p2) : UMLLine(p1,p2)
+Association::Association(Port* p1,Port* p2) : UMLLine(p1,p2)
 {
 }
 
@@ -40,7 +40,7 @@ void Association::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
 	UMLLine::hoverLeaveEvent(event);
 }
-void Association::_addPots(QPainterPath& path){
-	for(int i = 0;i < length();i++)
-		path.addRect(_addPot(getPotByIndex(i)));
-}
+//void Association::_addPots(QPainterPath& path){
+//	//for(int i = 0;i < length();i++)
+//	//	path.addRect(_addPot(getPortByIndex(i)));
+//}

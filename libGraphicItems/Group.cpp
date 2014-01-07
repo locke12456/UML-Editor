@@ -1,13 +1,12 @@
 #include "Group.h"
 
 using namespace std::placeholders; 
-Group::Group(void) : UMLItem() , _currentGroup(nullptr) , _group()
+UMLGroup::UMLGroup(void) : UMLItem() , _currentGroup(nullptr) , _group()
 {
-	setCalc(this);
 }
 
 
-Group::~Group(void)
+UMLGroup::~UMLGroup(void)
 {
 	std::list< std::list<UMLItem*> *>::const_iterator it = _group.begin();
 	for(;it!=_group.end();it++){
@@ -16,13 +15,13 @@ Group::~Group(void)
 	}
 }
 
-void Group::buildGroup()
+void UMLGroup::buildGroup()
 {
 	_currentGroup = new std::list<UMLItem *>();
 	_group.push_front(_currentGroup);
 }
 
-void Group::releaseGroup()
+void UMLGroup::releaseGroup()
 {
 	releaseAll();
 	delete _currentGroup;
@@ -36,7 +35,7 @@ void Group::releaseGroup()
 	}
 }
 
-void Group::addMember(UMLItem * item)
+void UMLGroup::addMember(UMLItem * item)
 {
 	if(_currentGroup != nullptr)
 	{
@@ -46,22 +45,22 @@ void Group::addMember(UMLItem * item)
 		//}
 	}
 }
-std::list<UMLItem*> * Group::getGroup(){
+std::list<UMLItem*> * UMLGroup::getGroup(){
 	return _currentGroup;
 }
-bool Group::IsInGroup(UMLItem * item)
+bool UMLGroup::IsInGroup(UMLItem * item)
 {
 	return _isMemberExist(item);
 }
-void Group::releaseAll()
+void UMLGroup::releaseAll()
 {
-	std::for_each(_currentGroup->begin(),_currentGroup->end(),std::bind(&Group::_release,this,_1));
+	std::for_each(_currentGroup->begin(),_currentGroup->end(),std::bind(&UMLGroup::_release,this,_1));
 }
-void Group::groupAll()
+void UMLGroup::groupAll()
 {
-	std::for_each(_currentGroup->begin(),_currentGroup->end(),std::bind(&Group::_set_group,this,_1));
+	std::for_each(_currentGroup->begin(),_currentGroup->end(),std::bind(&UMLGroup::_set_group,this,_1));
 }
-bool Group::hasMemberSelected()
+bool UMLGroup::hasMemberSelected()
 {
 	if(_currentGroup == nullptr) return false;
 	std::list<UMLItem*>::const_iterator it = _currentGroup->begin();
@@ -71,14 +70,14 @@ bool Group::hasMemberSelected()
 	}
 	return false;
 }
-void Group::setName(QString text,int size){
+void UMLGroup::setName(QString text,int size){
 }
-QPainterPath Group::shape()const{   
+QPainterPath UMLGroup::shape()const{   
 	QPainterPath path;
 
 	return path;  
 } 
-void Group::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){   
+void UMLGroup::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){   
 	Q_UNUSED(widget);   
 	if(_currentGroup == nullptr) return ;
 	QPainterPath temp;
@@ -98,42 +97,42 @@ void Group::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 	}
 
 } 
-void Group::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void UMLGroup::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 	UMLItem::mousePressEvent(event);
 }
-void Group::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+void UMLGroup::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
 	UMLItem::mouseMoveEvent(event);
 	if(_state != ItemState::Selected) return;
 	_center = event->scenePos();
 
 }
-void Group::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+void UMLGroup::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
 	UMLItem::mouseReleaseEvent(event);
 }
 
-void Group::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+void UMLGroup::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
 	UMLItem::hoverEnterEvent(event);
 }
 
-void Group::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
+void UMLGroup::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 {
 	UMLItem::hoverMoveEvent(event);
 }
 
-void Group::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+void UMLGroup::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
 	UMLItem::hoverLeaveEvent(event);
 }
-bool Group::_isMemberExist(UMLItem* item)
+bool UMLGroup::_isMemberExist(UMLItem* item)
 {
 	std::list<UMLItem*>::const_iterator it = std::find(_currentGroup->begin(),_currentGroup->end(),item);
 	return it != _currentGroup->end();
 }
-void Group::_addMmeber(UMLItem* item)
+void UMLGroup::_addMmeber(UMLItem* item)
 {
 	double min_x = FLT_MAX,min_y = FLT_MAX;
 	double max_x = 0,max_y = 0;
@@ -143,23 +142,23 @@ void Group::_addMmeber(UMLItem* item)
 		min_x = min(min_x,item->pos().x());		min_y = min(min_y,item->pos().y());
 		max_x = max(max_x,item->pos().x());		max_y = max(max_y,item->pos().y());
 	}
-	setSize(QSize(UMLPort::Distence(QPoint(min_x,0),QPoint(max_x,0)),UMLPort::Distence(QPoint(0,min_y),QPoint(0,max_y))));
+	setSize(QSize(PortFactory::Distence(QPoint(min_x,0),QPoint(max_x,0)),PortFactory::Distence(QPoint(0,min_y),QPoint(0,max_y))));
 	item->JoinToGroup();
 	_currentGroup->push_back(item);
 }
-void Group::_updatePos(UMLItem*item)
+void UMLGroup::_updatePos(UMLItem*item)
 {
 	QPointF pos = item->scenePos() - _center;
 	item->setPos(item->scenePos() + pos);
 }
-void Group::_updateItems(UMLItem*item){
+void UMLGroup::_updateItems(UMLItem*item){
 	//_updatePos(item,pos);
 }
-void Group::_release(UMLItem* item)
+void UMLGroup::_release(UMLItem* item)
 {
 	item->LeaveGroup();
 }
-void Group::_set_group(UMLItem* item)
+void UMLGroup::_set_group(UMLItem* item)
 {
 	item->JoinToGroup();
 }

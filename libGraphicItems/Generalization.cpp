@@ -5,7 +5,7 @@ Generalization::Generalization(void) : UMLLine()
 
 }
 
-Generalization::Generalization(QPoint p1,QPoint p2) : UMLLine(p1,p2)
+Generalization::Generalization(Port* p1,Port* p2) : UMLLine(p1,p2)
 {
 
 }

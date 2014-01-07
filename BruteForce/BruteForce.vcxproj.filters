@@ -42,11 +42,20 @@
     <Filter Include="Header Files\base">
       <UniqueIdentifier>{2433f901-e1d6-414e-b254-a23c6af38a12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UMLItems\Mode">
+      <UniqueIdentifier>{f205e0ca-8f62-43e1-a59e-60eb41e81782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UMLItems\Item">
+      <UniqueIdentifier>{e016319c-2652-4612-8d45-e421769664c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UMLItems\Line">
+      <UniqueIdentifier>{ca905693-302a-4634-8725-addb5f63b815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Mode">
+      <UniqueIdentifier>{79b84164-3c1f-4368-8bb9-ce388e62b7ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\libGraphicItems\ClassItem.cpp">
-      <Filter>UMLItems</Filter>
-    </ClCompile>
     <ClCompile Include="..\UMLEditor\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -58,9 +67,6 @@
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_mainwindow.cpp">
       <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libGraphicItems\UMLBase.cpp">
-      <Filter>UMLItems\base</Filter>
     </ClCompile>
     <ClCompile Include="..\libGraphicItems\UMLItem.cpp">
       <Filter>UMLItems\base</Filter>
@@ -74,23 +80,44 @@
     <ClCompile Include="..\libGraphicItems\UMLTextItem.cpp">
       <Filter>UMLItems\base</Filter>
     </ClCompile>
-    <ClCompile Include="..\libGraphicItems\Association.cpp">
-      <Filter>UMLItems</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libGraphicItems\UMLPort.cpp">
-      <Filter>UMLItems\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libGraphicItems\Composition.cpp">
-      <Filter>UMLItems</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libGraphicItems\Generalization.cpp">
+    <ClCompile Include="..\libGraphicItems\ItemSelect.cpp">
       <Filter>UMLItems</Filter>
     </ClCompile>
     <ClCompile Include="..\libGraphicItems\UseCaseItem.cpp">
-      <Filter>UMLItems</Filter>
+      <Filter>UMLItems\Item</Filter>
     </ClCompile>
-    <ClCompile Include="..\libGraphicItems\ItemSelect.cpp">
-      <Filter>UMLItems</Filter>
+    <ClCompile Include="..\libGraphicItems\ClassItem.cpp">
+      <Filter>UMLItems\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\Association.cpp">
+      <Filter>UMLItems\Line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\Composition.cpp">
+      <Filter>UMLItems\Line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\Generalization.cpp">
+      <Filter>UMLItems\Line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\UMLState.cpp">
+      <Filter>UMLItems\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\PortFactory.cpp">
+      <Filter>UMLItems\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\CreateItemMode.cpp">
+      <Filter>UMLItems\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\CreateLineMode.cpp">
+      <Filter>UMLItems\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\GroupMode.cpp">
+      <Filter>UMLItems\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\Mode.cpp">
+      <Filter>UMLItems\Mode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libGraphicItems\SelectMode.cpp">
+      <Filter>UMLItems\Mode</Filter>
     </ClCompile>
     <ClCompile Include="..\libGraphicItems\Group.cpp">
       <Filter>UMLItems</Filter>
@@ -114,9 +141,6 @@
     <ClInclude Include="GeneratedFiles\ui_umlediter.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\libGraphicItems\UMLBase.h">
-      <Filter>Header Files\base</Filter>
-    </ClInclude>
     <ClInclude Include="..\libGraphicItems\UMLItem.h">
       <Filter>Header Files\base</Filter>
     </ClInclude>
@@ -132,9 +156,6 @@
     <ClInclude Include="..\libGraphicItems\Association.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\libGraphicItems\UMLPort.h">
-      <Filter>Header Files\base</Filter>
-    </ClInclude>
     <ClInclude Include="..\libGraphicItems\Composition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -147,8 +168,29 @@
     <ClInclude Include="..\libGraphicItems\ItemSelect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\libGraphicItems\UMLState.h">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\PortFactory.h">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\CreateItemMode.h">
+      <Filter>Header Files\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\CreateLineMode.h">
+      <Filter>Header Files\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\GroupMode.h">
+      <Filter>Header Files\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\SelectMode.h">
+      <Filter>Header Files\Mode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libGraphicItems\Mode.h">
+      <Filter>Header Files\Mode</Filter>
+    </ClInclude>
     <ClInclude Include="..\libGraphicItems\Group.h">
-      <Filter>Header Files</Filter>
+      <Filter>UMLItems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,10 +1,11 @@
 #include "ItemSelect.h"
+#include "UMLScene.h"
 using namespace std::placeholders; 
 ItemSelect::ItemSelect(void) : UMLLine() , _list()
 {
 }
 
-ItemSelect::ItemSelect(QPoint p1,QPoint p2) : UMLLine(p1,p2) , _list()
+ItemSelect::ItemSelect(Port* p1,Port* p2) : UMLLine(p1,p2) , _list()
 {
 }
 
@@ -13,7 +14,6 @@ ItemSelect::~ItemSelect(void)
 }
 QPainterPath ItemSelect::shape(){   
 	QPainterPath path;
-	
 	path.moveTo(getLine().p1());
 	path.lineTo(getLine().p1().x(),getLine().p2().y());
 	path.lineTo(getLine().p2());
@@ -23,6 +23,7 @@ QPainterPath ItemSelect::shape(){
 } 
 void ItemSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){   
 	Q_UNUSED(widget);   
+	if(UMLScene::GetScene()->getState()->getSelected() != nullptr)return;
 	QPainterPath temp;
 	QPainterPath path = shape();
 	painter->setPen(QPen(Qt::red,1,Qt::DotLine));   
@@ -63,11 +64,11 @@ void ItemSelect::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 }
 void ItemSelect::_getSelected(UMLItem* item)
 {
-	if(item->getState() == ItemState::Selected){
+	/*if(item->getState() == ItemState::Selected){
 		item->setPortOpen(true);
 		_list.push_back(item);
 	}else
-		item->setPortOpen(false);
+		item->setPortOpen(false);*/
 }
 void ItemSelect::_select(UMLItem* item)
 {

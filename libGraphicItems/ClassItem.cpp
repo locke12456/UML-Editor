@@ -1,10 +1,10 @@
 #include "ClassItem.h"
-
+#include "UMLScene.h"
 
 ClassItem::ClassItem(void) : UMLItem() ,
 	_name(new UMLTextItem)
 {
-	setCalc(this);
+	//setCalc(this);
 	//_initPorts(_rect());
 
 }
@@ -12,12 +12,12 @@ ClassItem::ClassItem(void) : UMLItem() ,
 ClassItem::ClassItem(qreal wid,qreal hgt) : UMLItem(wid,hgt),
 	_name(new UMLTextItem) , _variable(std::list<UMLTextItem *>()) , _function(std::list<UMLTextItem *>()) 
 {
-	setCalc(this);
-	//_initPorts(_rect());
-	_addPort(QPoint(0,-hgt/2));
-	_addPort(QPoint(0, hgt/2));
-	_addPort(QPoint(-wid/2,0));
-	_addPort(QPoint(wid/2,0));
+	Port * ports[] = {new Port(0,-hgt/2) , new Port(0, hgt/2),new Port(-wid/2,0) , new Port(wid/2,0)};
+	for(int i =0;i<4;i++){
+		Port * port  = ports[i];
+		port->setParent(this);
+		_ports.addPort(port);
+	}
 }
 
 ClassItem::~ClassItem(void)
@@ -33,6 +33,7 @@ void ClassItem::setPos(QPointF p){
 	if(_state != ItemState::Selected)return;
 }
 QPainterPath ClassItem::shape(){   
+	_ports.setPortOpen(getState() == ItemState::Selected);
 	QPainterPath path = UMLItem::shape();  
 	_name->setPosition(_center.x(),_rect().y()+17);
 	path.moveTo(_rect().x(),_rect().y()+20);
@@ -40,17 +41,17 @@ QPainterPath ClassItem::shape(){
 	path.moveTo(_rect().x(),_rect().y()+20+(_rect().height()-20)/2);
 	path.lineTo(_rect().x()+_rect().width(),_rect().y()+20+(_rect().height()-20)/2);
 	path.addPath(_name->getPath());
-	if(IsPortOpen())
-		_addPorts(path);
+	if(_ports.IsPortOpen())
+		_addPortToPath(path);
 	return path;  
 } 
 void ClassItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){   
 	if(IsInGroup())return;
 	Q_UNUSED(widget);   
 	QPainterPath temp;
-	if(_state & ItemState::Selected || getParent()->getSelected() == this){    
+	if(_state & ItemState::Selected || UMLScene::GetScene()->getState()->getSelected() == this){    
 		painter->setPen(QPen(Qt::red,2,Qt::SolidLine));  
-	}
+	}else
 	if(_state & ItemState::Hover){    
 		painter->setPen(QPen(Qt::red,1,Qt::SolidLine));   
 	}
@@ -66,12 +67,11 @@ void ClassItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 }
 void ClassItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-
 	UMLItem::mouseMoveEvent(event);
 	if(_state != ItemState::Selected)return;
-	if(IsInGroup()){
-		getParent()->moveTo(event->scenePos()-pos());
-	}else
+	//if(IsInGroup()){
+	//	getParent()->moveTo(event->scenePos()-pos());
+	//}else
 		setPos(event->scenePos());
 }
 void ClassItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
@@ -96,10 +96,4 @@ void ClassItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
 	//if(IsInGroup())return;
 	UMLItem::hoverLeaveEvent(event);
-}
-void ClassItem::_addPorts(QPainterPath& path){
-	for(int i = 0;i < length();i++){
-		QRectF rect = _getPort(getPotByIndex(i));
-		path.addRect(QRectF(_center.x()+rect.x(),_center.y()+rect.y(),rect.width(),rect.height()));
-	}
 }

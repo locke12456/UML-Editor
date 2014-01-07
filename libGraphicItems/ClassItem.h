@@ -2,9 +2,10 @@
 #include <iostream>
 #include <list>
 
-#include "UMLPort.h"
-#include "umlitem.h"
+#include "PortFactory.h"
+#include "UMLItem.h"
 #include "UMLTextItem.h"
+
 class ClassItem :
 	public UMLItem
 {
@@ -27,7 +28,6 @@ protected:
     virtual void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 private:
-	void _addPorts(QPainterPath& path);
 	UMLTextItem * _name;
 	std::list<UMLTextItem *> _variable;
 	std::list<UMLTextItem *> _function;

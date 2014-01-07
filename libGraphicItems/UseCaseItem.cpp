@@ -1,20 +1,20 @@
 #include "UseCaseItem.h"
-
+#include "UMLScene.h"
 
 UseCaseItem::UseCaseItem(void) : UMLItem() ,
 	_name(new UMLTextItem)
 {
-	setCalc(this);
 }
 
 UseCaseItem::UseCaseItem(qreal wid,qreal hgt) : UMLItem(wid,hgt),
 	_name(new UMLTextItem) 
 {
-	setCalc(this);
-	_addPort(QPoint(0,-hgt/2));
-	_addPort(QPoint(0, hgt/2));
-	_addPort(QPoint(-wid/2,0));
-	_addPort(QPoint(wid/2,0));
+	Port * ports[] = {new Port(0,-hgt/2) , new Port(0, hgt/2),new Port(-wid/2,0) , new Port(wid/2,0)};
+	for(int i =0;i<4;i++){
+		Port * port  = ports[i];
+		port->setParent(this);
+		_ports.addPort(port);
+	}
 }
 
 UseCaseItem::~UseCaseItem(void)
@@ -26,24 +26,26 @@ void UseCaseItem::setName(QString text,int size){
 	_name->setFont(DEFAULT_FONT,size);
 }
 QPainterPath UseCaseItem::shape(){   
+	_ports.setPortOpen(getState() == ItemState::Selected);
 	QPainterPath path;
 	_center = QPoint(0,0);
 	if(IsInGroup())_center = pos();
 	path.addEllipse(_rect());    
 	_name->setPosition(_center.x(),_center.y()+8);
 	path.addPath(_name->getPath());
-	if(IsPortOpen())
-		_addPorts(path);
+	if(_ports.IsPortOpen())
+		_addPortToPath(path);
 	return path;  
 } 
 void UseCaseItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){   
 	Q_UNUSED(widget);   
 	if(IsInGroup())return;
 	QPainterPath temp;
-
-	if(_state & ItemState::Selected || getParent()->getSelected() == this){    
+	
+	UMLScene *_parent = UMLScene::GetScene(); 
+	if(_state & ItemState::Selected || _parent->getState()->getSelected() == this){    
 		painter->setPen(QPen(Qt::red,2,Qt::SolidLine));  
-	}
+	}else
 	if(_state & ItemState::Hover){    
 		painter->setPen(QPen(Qt::red,1,Qt::SolidLine));   
 	}
@@ -60,9 +62,10 @@ void UseCaseItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
 	UMLItem::mouseMoveEvent(event);
 	if(_state != ItemState::Selected)return;
-	if(IsInGroup()){
-		getParent()->moveTo(event->scenePos()-pos());
-	}else
+
+	//if(IsInGroup()){
+	//	getParent()->moveTo(event->scenePos()-pos());
+	//}else
 		setPos(event->scenePos());
 }
 void UseCaseItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
@@ -83,10 +86,4 @@ void UseCaseItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 void UseCaseItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
 	UMLItem::hoverLeaveEvent(event);
-}
-void UseCaseItem::_addPorts(QPainterPath& path){
-	for(int i = 0;i < length();i++){
-		QRectF rect = _getPort(getPotByIndex(i));
-		path.addRect(QRectF(_center.x()+rect.x(),_center.y()+rect.y(),rect.width(),rect.height()));
-	}
 }

@@ -1,12 +1,29 @@
 #include "UMLScene.h"
 
+UMLScene * UMLScene::_singleton = nullptr;
+
+UMLScene * UMLScene::GetScene()
+{
+	if(_singleton == nullptr)_singleton = new UMLScene();
+	return _singleton;
+}
+
+void UMLScene::Destory()
+{
+	delete _singleton;
+	_singleton = nullptr;
+}
 
 UMLScene::UMLScene(void) : 
 	_items(std::list<UMLItem*>()) , _lines(std::list<UMLLine*>()) ,
 	_line(nullptr) , _group(nullptr)
-	, _moveTo() , _lineTo() 
+	, _moveTo(nullptr) , _lineTo(nullptr)  
+	, _state()
 {
-
+	_init();
+	_moveTo = new Port(0,0);
+	_lineTo = new Port(0,0);
+	//_moveTo->setParent(this);
 }
 
 
@@ -20,27 +37,62 @@ UMLScene::~UMLScene(void)
 	}
 }
 
-void UMLScene::setGroup()
+void UMLScene::_init()
 {
-	_addToGroup();
+	_modes.insert(	std::make_pair(SelectItemMode				,new Select()				)  );
+	_modes.insert(	std::make_pair(ReleaseItemMode				,new Release()				)  );
+	_modes.insert(	std::make_pair(GroupItemMode				,new Group()				)  );
+	_modes.insert(	std::make_pair(UnGroupItemMode				,new UnGroup()				)  );
+	//_modes.insert(	std::make_pair(Broom				,ui->actionBroom				)  );
+	//_modes.insert(	std::make_pair(Add_package			,ui->actionAdd_package			)  );
+	_modes.insert(	std::make_pair(Add_class			,new CreateClass()			)  );
+	//_modes.insert(	std::make_pair(Add_interface		,ui->actionAdd_interface		)  );
+	_modes.insert(	std::make_pair(Add_use_case			,new CreateUseCase()			)  );
+	_modes.insert(	std::make_pair(Add_association		,new CreateAssociation()		)  );
+	//_modes.insert(	std::make_pair(Add_uni_association	,ui->actionAdd_uni_association	)  );
+	//_modes.insert(	std::make_pair(Add_aggregation		,ui->actionAdd_aggregation		)  );
+	_modes.insert(	std::make_pair(Add_composition		,new CreateComposition()		)  );
+	//_modes.insert(	std::make_pair(Add_association_end	,ui->actionAdd_association_end	)  );
+	_modes.insert(	std::make_pair(Add_generalization	,new CreateGeneralization()	)  );
+	//_modes.insert(	std::make_pair(Add_Realization		,ui->actionAdd_Realization		)  );
+	//_modes.insert(	std::make_pair(Add_dependency		,ui->actionAdd_dependency		)  );
+	//_modes.insert(	std::make_pair(Add_attribute		,ui->actionAdd_attribute		)  );
+	//_modes.insert(	std::make_pair(Add_operation		,ui->actionAdd_operation		)  );
+	//_modes.insert(	std::make_pair(Add_data_type		,ui->actionAdd_data_type		)  );
 }
-void UMLScene::setUnGroup()
+
+UMLState* UMLScene::getState(){
+	return &_state;
+}
+
+UMLGroup * UMLScene::getGroup()
 {
-	_group->releaseGroup();
-	if(_group->getGroup() == nullptr){
-		removeItem(_group);
-		_group = nullptr;
-	}
+	return _group;
 }
-void UMLScene::moveTo(QPointF point)
+std::list<UMLItem*> * UMLScene::getSelected()
 {
-	std::list<UMLItem *>::const_iterator it = _group->getGroup()->begin();
-	for(;it!=_group->getGroup()->end();it++)
-	{
-		UMLItem * item = *it;
-		item->setPos(item->pos()+point);
-	}
+	return &_selected;
 }
+
+std::list<UMLItem*> * UMLScene::getItemList()
+{
+	return &_items;
+}
+
+std::list<UMLLine*> * UMLScene::getLineList()
+{
+	return &_lines;
+}
+
+QPointF UMLScene::MousePosition()
+{
+	return _pos;
+}
+void UMLScene::ChangeCurrentMode(UMLAddToScene state)
+{
+	_changeCurrentMode(state);
+}
+
 void UMLScene::setItemName()
 {
 
@@ -53,128 +105,72 @@ void UMLScene::setItemName(QString text)
 	item->setName(text , 16);
 }
 
-void UMLScene::update_lines()
-{
-	std::list<UMLLine*>::const_iterator it = _lines.begin();
-	for(;it!=_lines.end();it++)
-	{
-		UMLLine* line = *it;
-		line->getLine();
-	}
-}
 
 void UMLScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-	_mousePress(event->scenePos());
+	_pos = event->scenePos();
+	if(_currentMode != nullptr) _currentMode->generate();
 	update();
 	QGraphicsScene::mousePressEvent(event);
 }
 
 void UMLScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-	_mouseMove(event->scenePos());
+	_pos = event->scenePos();
+	if(_currentMode != nullptr) _currentMode->contact();
 	update();
 	QGraphicsScene::mouseMoveEvent(event);
 }
 
 void UMLScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-	_mouseRelease(event->scenePos());
+	_pos = event->scenePos();
+	if(_currentMode != nullptr) _currentMode->modify();
 	update();
 	QGraphicsScene::mouseMoveEvent(event);
 }
-
-UMLItem * UMLScene::_searchCanMatchItem(UMLLine* line,QPoint point,_setter setter)
+void UMLScene::_changeCurrentMode(UMLAddToScene state)
 {
-	double min_dst = 0xfffff;
-	UMLLine * line_p = nullptr;
-	UMLItem* tmp , *setTo = nullptr;
-	QPoint temp, min_point; 
-	std::list<UMLItem*>::const_iterator it = _items.begin();
-	for(;it!=_items.end();it++)
-	{	
-		double dst;
-		tmp = *it;
-		if(_item == tmp ) 
-			continue;
-		temp = tmp->FindPonit(point);
-		dst = UMLPort::Distence(temp,point);
-		min_dst = min(min_dst,dst);
-		if(dst == min_dst ){
-			min_point = temp;
-			setTo= tmp;
-		}
-	}
-	if( min_point.x()!=-1000 )
-	{
-		_item = setTo;
-		(*line.*setter)(setTo,_item->getIndexByPort(min_point));
-	}
-	else
-		return nullptr;
-	return setTo;
+	_state.setModeState(state);
+	Actions::const_iterator mode = _modes.find(state);
+	_currentMode =mode ==_modes.end()?nullptr : mode->second;
 }
-
-UMLLine * UMLScene::_searchCanMatch(UMLLine * line)
-{
-	if(line==nullptr || !IsAddLineItem() )return nullptr;
-	_item = nullptr;
-	if(_searchCanMatchItem(line,_moveTo,&UMLLine::setParentItem) == nullptr)
-		return nullptr;
-	if(_searchCanMatchItem(line,_lineTo,&UMLLine::setTargetItem) == nullptr)
-		return nullptr;
-	_item = nullptr;
-	return line;
-}
-
 void UMLScene::_mousePress(QPointF pos)
-{
-	std::list<UMLItem*>::const_iterator it = _items.begin();
-	for(;it!=_items.end();it++){
-		UMLItem* item = *it;
-		item->setState(ItemState::Normal);
-		item->setPortOpen(false);
-	}
-	setSelected(nullptr);
+{	
+	_pos = pos;
 	_addToScene(pos);
-	if(IsAddLineItem()){
-		setDrawState(UMLDrawToScene::DrawPress);
+	if(_state.IsAddLineItem()){
+		_state.setDrawState(UMLDrawToScene::DrawPress);
 	}
 }
 void UMLScene::_mouseMove(QPointF pos)
 {
+	_pos = pos;
 	if(_line != nullptr){
-		_lineTo = QPoint(pos.x(),pos.y());
+		_lineTo->setPos(pos.x(),pos.y());
 		_line->setTargetPoint(_lineTo);
 
-		if(IsItemSelect())
+		if(_state.IsItemSelect())
 		{
 			_line->findInRange(_items);
 		}
 	}
-	if(IsAddLineItem())
+	if(_state.IsAddLineItem())
 	{
-		setDrawState(UMLDrawToScene::DrawMove);
+		_state.setDrawState(UMLDrawToScene::DrawMove);
 	}
 }
 void UMLScene::_mouseRelease(QPointF pos)
 {
-	if(getState() == UMLAddToScene::Select )_releaseSelect();
-	if(IsAddLineItem()){
-		if(_searchCanMatch(_line)==nullptr){
-			removeItem(_line);
-		}else{
-			_lines.push_back(_line);
-			_line = nullptr;
-		}
-		setDrawState(UMLDrawToScene::DrawFinish);
-	}
+	_pos = pos;
+	if(_state.getModeState() == UMLAddToScene::SelectItemMode )_releaseSelect();
+	
 }
 
 void UMLScene::_addToScene(QPointF pos)
 {
-	switch(_state){
-	case UMLAddToScene::Select:
+	switch(_state.getModeState()){
+	case UMLAddToScene::SelectItemMode:
 		_initSelect(pos);
 		break;
 	case UMLAddToScene::Add_class:
@@ -182,15 +178,6 @@ void UMLScene::_addToScene(QPointF pos)
 		break;
 	case UMLAddToScene::Add_use_case:
 		_items.push_back(_addUseCaseItem(pos));
-		break;
-	case UMLAddToScene::Add_generalization:
-		_addGeneralization(pos);
-		break;
-	case UMLAddToScene::Add_composition:
-		(_addComposition(pos));
-		break;
-	case UMLAddToScene::Add_association:
-		(_addAssociation(pos));
 		break;
 	default:
 		_line = nullptr;
@@ -200,17 +187,17 @@ void UMLScene::_addToScene(QPointF pos)
 
 void UMLScene::_addToGroup()
 {
-	if(_group == nullptr){
-		_group = new Group();
-		addItem(_group);
+	/*if(_group == nullptr){
+	_group = new Group();
+	addItem(_group);
 	}
 	_group->buildGroup();
 	std::list<UMLItem *>::const_iterator it = _selected.begin();
 	for(;it!=_selected.end();it++)
 	{
-		_group->addMember(*it);
-	}
-	
+	_group->addMember(*it);
+	}*/
+
 }
 
 ClassItem * UMLScene::_addClass(QPointF pos)
@@ -218,7 +205,7 @@ ClassItem * UMLScene::_addClass(QPointF pos)
 	ClassItem *item = new ClassItem(100,80);
 	item->setName("Class",16);
 	item->setPos(pos);
-	item->setParent(this);
+	//item->setParent(this);
 	addItem(item);
 	_item = item;
 	return item;
@@ -229,7 +216,7 @@ UseCaseItem * UMLScene::_addUseCaseItem(QPointF pos)
 	UseCaseItem *item = new UseCaseItem(120,100);
 	item->setName("UseCase",16);
 	item->setPos(pos);
-	item->setParent(this);
+	//item->setParent(this);
 	addItem(item);
 	_item = item;
 	return item;
@@ -237,10 +224,10 @@ UseCaseItem * UMLScene::_addUseCaseItem(QPointF pos)
 
 void UMLScene::_initSelect(QPointF pos)
 {
-	_lineTo =QPoint(pos.x(),pos.y());
-	_moveTo = QPoint(pos.x(),pos.y());
+	_lineTo->setPos(pos.x(),pos.y());
+	_moveTo->setPos(pos.x(),pos.y());
 	ItemSelect * line = new ItemSelect(_moveTo,_lineTo);
-	line->setParent(this);
+	//line->setParent(this);
 	addItem(line);
 	line->releaseAll(_items);
 	_line = line;
@@ -253,39 +240,39 @@ void UMLScene::_releaseSelect()
 	if(list.size()>0)
 	{
 		_item = *list.begin();
-		setSelected(_item);
+		_state.setSelected(_item);
 		_selected = list;
-	}else setSelected(nullptr);
+	}else _state.setSelected(nullptr);
 	removeItem(_line);
 	_line = nullptr;
 }
 
 Association * UMLScene::_addAssociation(QPointF pos)
 {
-	_lineTo =QPoint(pos.x(),pos.y());
-	_moveTo = QPoint(pos.x(),pos.y());
+	_lineTo->setPos(pos.x(),pos.y());
+	_moveTo->setPos(pos.x(),pos.y());
 	Association * line = new Association(_moveTo,_lineTo);
-	line->setParent(this);
+	//line->setParent(this);
 	addItem(line);
 	_line = line;
 	return line;
 }
 Composition * UMLScene::_addComposition(QPointF pos)
 {
-	_lineTo =QPoint(pos.x(),pos.y());
-	_moveTo = QPoint(pos.x(),pos.y());
+	_lineTo->setPos(pos.x(),pos.y());
+	_moveTo->setPos(pos.x(),pos.y());
 	Composition * line = new Composition(_moveTo,_lineTo);
-	line->setParent(this);
+	//line->setParent(this);
 	addItem(line);
 	_line = line;
 	return line;
 }
 Generalization * UMLScene::_addGeneralization(QPointF pos)
 {
-	_lineTo =QPoint(pos.x(),pos.y());
-	_moveTo = QPoint(pos.x(),pos.y());
+	_lineTo->setPos(pos.x(),pos.y());
+	_moveTo->setPos(pos.x(),pos.y());
 	Generalization * line = new Generalization(_moveTo,_lineTo);
-	line->setParent(this);
+	//line->setParent(this);
 	addItem(line);
 	_line = line;
 	return line;

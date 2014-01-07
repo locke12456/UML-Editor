@@ -6,7 +6,7 @@ class Composition : public UMLLine
 {
 public:
 	Composition(void);
-	Composition(QPoint p1,QPoint p2);
+	Composition(Port* p1,Port* p2);
 	~Composition(void);
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	QPainterPath shape();

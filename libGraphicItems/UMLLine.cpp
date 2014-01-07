@@ -1,7 +1,6 @@
 #include "UMLLine.h"
-
-UMLLine::UMLLine(void) : _point1() , _point2() ,
-	_target_item(nullptr) , _parent_item(nullptr),
+#include "UMLScene.h"
+UMLLine::UMLLine(void) : _point1(nullptr) , _point2(nullptr) ,  
 	_state(ItemState::Normal)
 {
 	setZValue(-1000);
@@ -11,8 +10,7 @@ UMLLine::UMLLine(void) : _point1() , _point2() ,
 	setAcceptHoverEvents(true);
 }
 
-UMLLine::UMLLine(QPoint p1,QPoint p2) :  _point1(p1) , _point2(p2) ,
-	_target_item(nullptr) , _parent_item( nullptr ) ,
+UMLLine::UMLLine(Port* p1,Port* p2) :  _point1(p1) , _point2(p2) ,
 	_state(ItemState::Normal) 
 {   
 	setZValue(0);
@@ -23,10 +21,12 @@ UMLLine::UMLLine(QPoint p1,QPoint p2) :  _point1(p1) , _point2(p2) ,
 }  
 
 QRectF UMLLine::boundingRect()const{  
-	
-	QPoint point =	_point1.x()>_point2.x() && _point1.y()<_point2.y() ? QPoint(_point2.x() , _point1.y()) :
-					_point1.x()<_point2.x() && _point1.y()>_point2.y() ? QPoint(_point1.x() , _point2.y()) : QPointMin(_point1,_point2);
-	return QRectF( point.x() , point.y() ,abs((_point1-_point2).x()) , abs((_point1-_point2).y()) );
+	//if(_point1 == nullptr || _point2 == nullptr)return;
+	QPointF point1 = _point1->mapToScene(); 
+	QPointF point2 = _point2->mapToScene(); 
+	QPointF point =	point1.x()>point2.x() && point1.y()<point2.y() ? QPoint(point2.x() , point1.y()) :
+					point1.x()<point2.x() && point1.y()>point2.y() ? QPoint(point1.x() , point2.y()) : QPointMin(point1,point2);
+	return QRectF( point.x() , point.y() ,abs((point1-point2).x()) , abs((point1-point2).y()) );
 }  
 
 QPainterPath UMLLine::shape()const{   
@@ -38,15 +38,13 @@ void UMLLine::findInRange(std::list<UMLItem*> ){
 }
 QLineF UMLLine::getLine()
 {
-	if(_parent_item!=nullptr)_point1 = _parent_item->FindPonit(_point1);
-	if(_target_item!=nullptr)_point2 = _target_item->FindPonit(_point2);
-	return QLineF(mapToScene(_point1),mapToScene(_point2));
+	return QLineF(_point1->mapToScene(),_point2->mapToScene());
 }
 
 TargetPosition UMLLine::getTargetPosition()
 {
-	double x = (_point2.x() - _point1.x());
-	double y = (_point2.y() - _point1.y());
+	double x = (_point2->mapToScene().x() - _point1->mapToScene().x());
+	double y = (_point2->mapToScene().y() - _point1->mapToScene().y());
 	double theta = atan((x / y));
 	double angle = abs(theta / 3.14159 * 180);
 	if (y > 0){
@@ -85,37 +83,16 @@ void UMLLine::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 	painter->drawLine(getLine());
 } 
 
-void UMLLine::setCurrentPoint(QPoint point)
+void UMLLine::setCurrentPoint(Port* point)
 {
 	_point1 = point;
 }
 
-void UMLLine::setTargetPoint(QPoint point)
+void UMLLine::setTargetPoint(Port* point)
 {
 	_point2 = point;
 }
 
-void UMLLine::setParent(UMLBase * parent)
-{
-	_parent = parent;
-}
-
-void UMLLine::setTargetItem(UMLItem* item,int index)
-{
-	_target_item = item;
-	_target_index = index;
-}
-
-void UMLLine::setParentItem(UMLItem* item , int index)
-{
-	_parent_item = item;
-	_parent_index = index;
-}
-
-UMLBase * UMLLine::getParent()
-{
-	return _parent;
-}
 
 QRectF UMLLine::_addPot(QPoint pot){
 	return QRectF(pot.x()-1,pot.y()-1,2,2);
@@ -123,28 +100,33 @@ QRectF UMLLine::_addPot(QPoint pot){
 
 void UMLLine::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-	if(_parent != nullptr && _parent->getState() != UMLAddToScene::Select)return;
+	
+	UMLScene *_parent = UMLScene::GetScene(); 
+	if(_parent != nullptr && _parent->getState()->getModeState() != SelectItemMode)return;
 	_state = ItemState::Selected;
 	update();
 }
 
 void UMLLine::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-	if(_parent != nullptr && _parent->getState() != UMLAddToScene::Select)return;
+	UMLScene *_parent = UMLScene::GetScene(); 
+	if(_parent != nullptr && _parent->getState()->getModeState() != SelectItemMode)return;
 	_state = ItemState::Selected;
 	update();
 }
 
 void UMLLine::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-	if(_parent != nullptr && _parent->getState() != UMLAddToScene::Select)return;
+	UMLScene *_parent = UMLScene::GetScene(); 
+	if(_parent != nullptr && _parent->getState()->getModeState() != SelectItemMode)return;
 	_state = ItemState::Normal;
 	update();
 }
 
 void UMLLine::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-	if(_parent != nullptr && _parent->getState() != UMLAddToScene::Select)return;
+	UMLScene *_parent = UMLScene::GetScene(); 
+	if(_parent != nullptr && _parent->getState()->getModeState() != SelectItemMode)return;
 	if(_state == ItemState::Selected)return;
 	_state = ItemState::Hover;
 	update();
@@ -152,7 +134,8 @@ void UMLLine::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 
 void UMLLine::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 {
-	if(_parent != nullptr && _parent->getState() != UMLAddToScene::Select)return;
+	UMLScene *_parent = UMLScene::GetScene(); 
+	if(_parent != nullptr && _parent->getState()->getModeState() != SelectItemMode)return;
 	if(_state == ItemState::Selected)return;
 	_state = ItemState::Hover;
 	update();
@@ -160,7 +143,8 @@ void UMLLine::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 
 void UMLLine::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-	if(_parent != nullptr && _parent->getState() != UMLAddToScene::Select)return;
+	UMLScene *_parent = UMLScene::GetScene(); 
+	if(_parent != nullptr && _parent->getState()->getModeState() != SelectItemMode)return;
 	if(_state == ItemState::Selected)return;
 	_state = ItemState::Normal;
 	update();

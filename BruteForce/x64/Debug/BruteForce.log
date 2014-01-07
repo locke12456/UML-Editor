@@ -1,5 +1,44 @@
-﻿已經開始建置於 2013/11/26 下午 09:45:11。
+﻿已經開始建置於 1/8/2014 3:31:44 AM。
+     1>節點 2 (Build 目標) 上的專案 "D:\C\QT\Uml Editor Single\BruteForce\BruteForce.vcxproj"。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\CL.exe /c /I.\GeneratedFiles /I. /ID:\devel\qt\5.0.1\msvc2012\include /I.\GeneratedFiles\Debug /ID:\devel\qt\5.0.1\msvc2012\include\QtCore /ID:\devel\qt\5.0.1\msvc2012\include\QtGui /ID:\devel\qt\5.0.1\msvc2012\include\QtWidgets /Zi /nologo /W1 /WX- /Od /D UNICODE /D WIN32 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_WIDGETS_LIB /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc110.pdb" /Gd /TP /errorReport:prompt ..\UMLEditor\main.cpp ..\UMLEditor\mainwindow.cpp ..\libGraphicItems\ClassItem.cpp ..\libGraphicItems\CreateLineMode.cpp ..\libGraphicItems\GroupMode.cpp ..\libGraphicItems\ItemSelect.cpp ..\libGraphicItems\UMLItem.cpp ..\libGraphicItems\UMLLine.cpp ..\libGraphicItems\UMLScene.cpp ..\libGraphicItems\UseCaseItem.cpp GeneratedFiles\Debug\moc_mainwindow.cpp
+         main.cpp
+         mainwindow.cpp
+         ClassItem.cpp
+         CreateLineMode.cpp
+         GroupMode.cpp
+         ItemSelect.cpp
+         UMLItem.cpp
+         UMLLine.cpp
+         UMLScene.cpp
+         UseCaseItem.cpp
+         moc_mainwindow.cpp
+         正在產生程式碼...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"D:\C\QT\Uml Editor Single\x64\Debug\\UMLEditor.exe" /NOLOGO /LIBPATH:D:\devel\qt\5.0.1\msvc2012\lib qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Widgetsd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\C\QT\Uml Editor Single\x64\Debug\UMLEditor.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\C\QT\Uml Editor Single\x64\Debug\UMLEditor.lib" /MACHINE:X64 x64\Debug\Association.obj
+         x64\Debug\ClassItem.obj
+         x64\Debug\Composition.obj
+         x64\Debug\CreateItemMode.obj
+         x64\Debug\CreateLineMode.obj
+         x64\Debug\Generalization.obj
+         x64\Debug\Group.obj
+         x64\Debug\GroupMode.obj
+         x64\Debug\ItemSelect.obj
+         x64\Debug\Mode.obj
+         x64\Debug\SelectMode.obj
+         x64\Debug\UMLState.obj
+         x64\Debug\UMLItem.obj
+         x64\Debug\UMLLine.obj
+         x64\Debug\PortFactory.obj
+         x64\Debug\UMLScene.obj
+         x64\Debug\UMLTextItem.obj
+         x64\Debug\UseCaseItem.obj
+         x64\Debug\main.obj
+         x64\Debug\mainwindow.obj
+         x64\Debug\moc_mainwindow.obj
+         BruteForce.vcxproj -> D:\C\QT\Uml Editor Single\x64\Debug\UMLEditor.exe
+     1>專案 "D:\C\QT\Uml Editor Single\BruteForce\BruteForce.vcxproj" (Build 目標) 建置完成。
 
 建置成功。
 
-經過時間 00:00:00.00
+經過時間 00:00:19.30

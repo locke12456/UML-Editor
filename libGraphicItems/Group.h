@@ -3,19 +3,20 @@
 #include <list>
 #include <functional>
 #include <algorithm>
-#include "UMLPort.h"
+#include "PortFactory.h"
 #include "umlitem.h"
 #include "UMLTextItem.h"
-class Group :
+class UMLGroup :
 	public UMLItem
 {
 	//Q_OBJECT
 public:
-	Group(void);
-	~Group(void);
+	UMLGroup(void);
+	~UMLGroup(void);
 	virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	virtual QPainterPath shape()const;
 	std::list<UMLItem*> * getGroup();
+
 	bool IsInGroup(UMLItem * );
 	bool hasMemberSelected();
 	void buildGroup();
@@ -33,6 +34,7 @@ protected:
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     virtual void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+
 private:
 	bool _isMemberExist(UMLItem*);
 	void _addMmeber(UMLItem*);

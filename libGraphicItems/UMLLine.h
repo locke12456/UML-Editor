@@ -7,22 +7,19 @@ enum TargetPosition
 	Center,Up,Down,Left,Right
 };
 class UMLLine :
-	public QGraphicsLineItem 
+	public QAbstractGraphicsShapeItem 
 {
 	//Q_OBJECT
 public:
 	UMLLine(void);
-	UMLLine(QPoint p1,QPoint p2);
+	UMLLine(Port* p1,Port* p2);
 	QRectF boundingRect()const;   
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);   
-    virtual QPainterPath shape()const;  
-	void setParent(UMLBase * parent);
-	void setCurrentPoint(QPoint);
-	void setTargetPoint(QPoint);
-	void setTargetItem(UMLItem *,int);
-	void setParentItem(UMLItem *,int);
+    virtual QPainterPath shape()const; 
+	void setCurrentPoint(Port *);
+	void setTargetPoint(Port *);
 	TargetPosition getTargetPosition();
-	UMLBase * getParent();
+	UMLState * getParent();
 	QLineF getLine();
 	virtual void findInRange(std::list<UMLItem*>);
 protected :
@@ -35,11 +32,8 @@ protected :
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 	ItemState _state;
 private:   
-	UMLBase * _parent;
-    QPoint _point1;  
-    QPoint _point2; 
-	UMLItem * _parent_item;
-	UMLItem * _target_item;
+    Port* _point1;  
+    Port* _point2; 
 	int _parent_index;
 	int _target_index;
 };
