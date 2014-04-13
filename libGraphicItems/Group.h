@@ -21,7 +21,7 @@ public:
 	bool hasMemberSelected();
 	void buildGroup();
 	void releaseGroup();
-
+	void moveTo(QPointF point);
 	void addMember(UMLItem*);
 	void addToGrop(UMLItem*);
 	void groupAll();

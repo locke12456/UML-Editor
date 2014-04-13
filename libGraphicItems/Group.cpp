@@ -45,6 +45,15 @@ void UMLGroup::addMember(UMLItem * item)
 		//}
 	}
 }
+void UMLGroup::moveTo(QPointF point)
+{
+	std::list<UMLItem *>::const_iterator it = getGroup()->begin();
+	for(;it!=getGroup()->end();it++)
+	{
+		UMLItem * item = *it;
+		item->setPos(item->pos()+point);
+	}
+}
 std::list<UMLItem*> * UMLGroup::getGroup(){
 	return _currentGroup;
 }

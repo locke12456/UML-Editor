@@ -46,10 +46,11 @@ QPainterPath ClassItem::shape(){
 	return path;  
 } 
 void ClassItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){   
-	if(IsInGroup())return;
+	if(IsInGroup())
+		return;
 	Q_UNUSED(widget);   
 	QPainterPath temp;
-	if(_state & ItemState::Selected || UMLScene::GetScene()->getState()->getSelected() == this){    
+	if(_state & ItemState::Selected || (!UMLScene::GetScene()->getState()->IsDrawPress()&&UMLScene::GetScene()->getState()->getSelected() == this)){    
 		painter->setPen(QPen(Qt::red,2,Qt::SolidLine));  
 	}else
 	if(_state & ItemState::Hover){    
@@ -69,14 +70,14 @@ void ClassItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
 	UMLItem::mouseMoveEvent(event);
 	if(_state != ItemState::Selected)return;
-	//if(IsInGroup()){
-	//	getParent()->moveTo(event->scenePos()-pos());
-	//}else
+	if(IsInGroup()){
+		UMLScene::GetScene()->getGroup()->moveTo(event->scenePos()-pos());
+	}else
 		setPos(event->scenePos());
 }
 void ClassItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-	//if(IsInGroup())return;
+	if(IsInGroup())return;
 	UMLItem::mouseReleaseEvent(event);
 }
 

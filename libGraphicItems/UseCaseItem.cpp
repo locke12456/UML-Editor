@@ -62,10 +62,9 @@ void UseCaseItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
 	UMLItem::mouseMoveEvent(event);
 	if(_state != ItemState::Selected)return;
-
-	//if(IsInGroup()){
-	//	getParent()->moveTo(event->scenePos()-pos());
-	//}else
+	if(IsInGroup()){
+		UMLScene::GetScene()->getGroup()->moveTo(event->scenePos()-pos());
+	}else
 		setPos(event->scenePos());
 }
 void UseCaseItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)

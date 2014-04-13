@@ -101,6 +101,7 @@ void  CreateAssociation::generate(){
 	CreateLineMode::generate();
 	_line = new Association(_moveTo,_lineTo);
 	UMLScene::GetScene()->addItem(_line);
+	UMLScene::GetScene()->getLineList()->push_back(_line);
 }
 
 CreateComposition::CreateComposition(void) : CreateLineMode()
@@ -113,6 +114,7 @@ void  CreateComposition::generate(){
 	CreateLineMode::generate();
 	_line = new Composition(_moveTo,_lineTo);
 	UMLScene::GetScene()->addItem(_line);
+	UMLScene::GetScene()->getLineList()->push_back(_line);
 }
 
 
@@ -126,4 +128,5 @@ void  CreateGeneralization::generate(){
 	CreateLineMode::generate();
 	_line = new Generalization(_moveTo,_lineTo);
 	UMLScene::GetScene()->addItem(_line);
+	UMLScene::GetScene()->getLineList()->push_back(_line);
 }

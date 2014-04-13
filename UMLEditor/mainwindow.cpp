@@ -82,11 +82,19 @@ void MainWindow::_actionSetItemName()
 
 void MainWindow::_actionSetGroup()
 {
+	UMLAddToScene state = _scene->getState()->getModeState();
+	_scene->ChangeCurrentMode(UMLAddToScene::GroupItemMode);
+	_scene->GetCurrentMode()->modify();
+	_scene->ChangeCurrentMode(state);
 	//_scene->setGroup();
 }
 
 void MainWindow::_actionSetUnGroup()
-{
+{	
+	UMLAddToScene state = _scene->getState()->getModeState();
+	_scene->ChangeCurrentMode(UMLAddToScene::UnGroupItemMode);
+	_scene->GetCurrentMode()->modify();
+	_scene->ChangeCurrentMode(state);
 	//_scene->setUnGroup();
 }
 

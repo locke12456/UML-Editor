@@ -1,25 +1,11 @@
 #pragma once
-#include "Mode.h"
-class SelectMode : public Mode
+#include "CreateLineMode.h"
+class SelectMode : public CreateLineMode
 {
 public:
 	SelectMode(void);
 	~SelectMode(void);
 	virtual void generate();
-	virtual void modify();
 	virtual void contact();
-};
-class Select : public SelectMode
-{
-public:
-	Select(void);
-	~Select(void);
-	virtual void modify();
-};
-class Release : public SelectMode
-{
-public:
-	Release(void);
-	~Release(void);
 	virtual void modify();
 };

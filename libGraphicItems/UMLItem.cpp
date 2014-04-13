@@ -110,8 +110,9 @@ void UMLItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 	
 	UMLScene *_parent = UMLScene::GetScene(); 
 	if(_parent != nullptr && _parent->getState()->getModeState() != SelectItemMode)return;
-	_state = ItemState::Normal;
+	((UMLItem*)_parent->getState()->getSelected())->setState(ItemState::Normal);
 	_parent->getState()->setSelected((void*)this);
+	_state = ItemState::Selected;
 	update();
 }
 

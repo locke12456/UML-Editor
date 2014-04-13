@@ -34,7 +34,7 @@ void Group::modify()
 {
 	UMLScene * scene = UMLScene::GetScene();
 	UMLGroup * group = scene->getGroup();
-	std::list<UMLItem*> *  selected = scene->getSelected();
+	std::list<UMLItem*> * selected = scene->getSelected();
 	if(group == nullptr){
 		group = new UMLGroup();
 		scene->addItem(group);
@@ -45,6 +45,7 @@ void Group::modify()
 	{
 		group->addMember(*it);
 	}
+	scene->setGroup(group);
 }
 
 UnGroup::UnGroup(void)
@@ -58,5 +59,11 @@ UnGroup::~UnGroup(void)
 
 void UnGroup::modify()
 {
-
+	UMLScene * scene = UMLScene::GetScene();
+	UMLGroup * group = scene->getGroup();
+	group->releaseGroup();
+	if(group->getGroup() == nullptr){
+		scene->removeItem(group);
+		scene->setGroup(nullptr);
+	}
 }

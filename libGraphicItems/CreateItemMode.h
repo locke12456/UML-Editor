@@ -31,3 +31,13 @@ public:
 	~CreateUseCase(void);
 	virtual void generate();
 };
+
+//class SetNameMode : public Mode
+//{
+//public:
+//	SetNameMode(void);
+//	~SetNameMode(void);
+//	virtual void generate();
+//	virtual void modify();
+//	virtual void contact();
+//};

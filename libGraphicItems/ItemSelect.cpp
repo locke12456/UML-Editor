@@ -64,11 +64,11 @@ void ItemSelect::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 }
 void ItemSelect::_getSelected(UMLItem* item)
 {
-	/*if(item->getState() == ItemState::Selected){
-		item->setPortOpen(true);
+	if(item->getState() == ItemState::Selected){
+		//item->setPortOpen(true);
 		_list.push_back(item);
-	}else
-		item->setPortOpen(false);*/
+	}//else
+	//	item->setPortOpen(false);
 }
 void ItemSelect::_select(UMLItem* item)
 {
