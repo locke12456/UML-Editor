@@ -1,4 +1,6 @@
-
+# Configure Qt
+find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Test REQUIRED)
 
 if (NOT MSVC)
   # Enable the C++11 standard
@@ -7,8 +9,20 @@ endif()
 
 file(GLOB_RECURSE UI_FILES ../ui/*.ui)
 file(GLOB_RECURSE CODE_FILES *.cpp)
+
 qt5_wrap_ui(UI_HEADERS ${UI_FILES})
 qt5_add_resources(RESOURCE_FILES ../resource/umleditor.qrc)
+
+# Set the headers that need moc'ing
+file (GLOB MOC_FILES mainwindow.cpp)
+QT5_WRAP_CPP (MOC_SOURCES ${MOC_FILES})
+
+# Force PCH for the generated MOC files
+foreach (src_file ${MOC_SOURCES})
+    set_source_files_properties (${src_file} 
+  PROPERTIES COMPILE_FLAGS "/Yustdafx.h /FIstdafx.h"
+)
+endforeach()
 
 # Windows application icon
 #if (WIN32)
