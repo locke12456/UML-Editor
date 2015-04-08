@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>UML Editer</string>
+   <string>UML Editor</string>
   </property>
   <widget class="QWidget" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
@@ -432,7 +432,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="umlediter.qrc"/>
+  <include location="../resource/umleditor.qrc"/>
  </resources>
  <connections/>
 </ui>

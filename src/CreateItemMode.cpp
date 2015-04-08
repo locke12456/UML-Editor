@@ -51,7 +51,7 @@ void  CreateUseCase::generate(){
 	CreateItemMode::generate();
 	QPointF pos = UMLScene::GetScene()->MousePosition();
 	UseCaseItem *item = new UseCaseItem(100,80);
-	item->setName("UseClass",16);
+	item->setName("UseCase",16);
 	item->setPos(pos);
 	UMLScene::GetScene()->addItem(item);
 	UMLScene::GetScene()->getItemList()->push_back(item);
